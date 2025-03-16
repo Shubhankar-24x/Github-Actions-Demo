@@ -24,6 +24,7 @@ jobs:
               
 
     test:
+        needs: build
         runs-on: ubuntu-latest
         steps:
             - name: Get Code
