@@ -9,7 +9,7 @@ on:
         paths-ignore: # List of paths to ignore
             - '/.github/workflows/*'
 jobs:
-    build:
+    install:
         runs-on: ubuntu-latest
         steps:
             - name: Print
@@ -23,7 +23,8 @@ jobs:
               run: npm ci 
               
 
-    test:
+    build:
+        needs: install
         runs-on: ubuntu-latest
         steps:
             - name: Get Code
@@ -39,10 +40,15 @@ jobs:
               run: echo "Hello World"
             - name: Build
               run: npm run build 
+            - name: Upload Artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                name: dist
+                path: dist
 
 
     deploy:
-        needs: test # run this job only if build job is successful
+        needs: build # run this job only if build job is successful
         runs-on: ubuntu-latest
         steps:
             - name: Get Code
