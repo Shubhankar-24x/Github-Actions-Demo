@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://Shubhankar-24x.github.io/Github-Actions-Demo",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
