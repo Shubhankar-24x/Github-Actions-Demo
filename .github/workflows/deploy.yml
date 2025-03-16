@@ -1,0 +1,47 @@
+name: Deploy
+
+on: [push,workflow_dispatch] # workflow_dispatch for manual trigger
+
+# on: # List of events that allow you to specify when the workflow should run
+#     - push
+#     - workflow_dispatch
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Print
+              uses: actions/checkout@v4
+            - name: Install Node
+              uses: actions/setup-node@v4
+              with:
+                node-version: '18'
+                cache: 'npm' # caching npm
+            - name: Install dependencies
+              run: npm ci 
+              
+                # Run multiple commands using pipe( | )
+                #   run: | 
+
+                #     echo "Hello World"
+                #     echo "Clone repository Dynamically"
+                #     git clone https://github.com/${{ github.repository }}.git 
+              
+            
+    
+    deploy:
+        needs: build # run this job only if build job is successful
+        runs-on: ubuntu-latest
+        steps:
+            - name: Get Code
+              uses: actions/checkout@v4
+            - name: Install Node
+              uses: actions/setup-node@v4
+              with:
+                node-version: '18'
+                cache: 'npm' # caching npm
+            - name: Install dependencies
+              run: npm ci 
+            - name: Deploy
+              run: echo "Hello World"
+            - name: Build
+              run: npm run build 
